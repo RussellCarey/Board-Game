@@ -1,6 +1,5 @@
 "use strict";
 const RoomServices = require("../services/socket/roomServices");
-const GameServices = require("../services/socket/gameServices");
 const randomWords = require("random-words");
 
 exports.setupSocketCommands = (server) => {
@@ -53,7 +52,7 @@ exports.setupSocketCommands = (server) => {
     // Recieve move that is desired and run logic, return new data if okay..
     socket.on("attemptMove", (data) => {
       // On reciving a move attempt, move peice and do checks, send back move data
-      GameServices.canMakeSelectedMove(socket, rooms, data.from, data.to);
+      rooms[socket.currentRoom].board.canMakeSelectedMove(socket, rooms, data.from, data.to);
 
       // Send back game either way
       io.to(socket.currentRoom).emit("roomData", {

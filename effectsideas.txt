@@ -1,0 +1,20 @@
+Abilities on death effects.
+
+When someone dies you can do damage to all around it, or all in a line vertical or horizontal,  or both.
+
+We can add health to certain enemies, certain directions.
+
+Add / take away attack damage…
+
+On death randomise all pieces on the board.. mega.
+
+Rarity bonuses..
+Gold always gets 2 abilities. 100%
+Purple always one.. 100%
+Blue sometimes one… 50% OR always has one but the strength is lower..
+
+Maybe have them in a range, for example, blue is 1- 2 and purple+ is 2 - 4
+
+Or whole board effects eg, all players swap positions. All take damage, or all heal for 1… etc..
+
+Nice ideas..!!! !!

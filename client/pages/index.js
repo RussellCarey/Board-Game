@@ -4,16 +4,14 @@ import styled from "styled-components";
 import Board from "../components/Board";
 import BottomPanel from "../components/BottomPanel";
 
-import { boardTemplate } from "../utils/defaultGameData";
-
 const GameContainer = styled.div`
   width: 100vw;
   height: 100vh;
 
   padding-top: 100px;
+  padding-left: 100px;
 
   display: flex;
-  justify-content: center;
 `;
 
 const RoomListContainer = styled.div`
@@ -38,11 +36,21 @@ const RoomButton = styled.button`
   align-items: center;
 `;
 
+const Text = styled.p`
+  z-index: 1000000;
+  color: black;
+  font-size: 40px;
+
+  position: absolute;
+  top: 0;
+  right: 400px;
+`;
+
 export default function Home() {
   const socketRef = useRef();
   const [playerNumber, setPlayerNumber] = useState(100);
   const [selectedPlayer, setSelectedPlayer] = useState([]);
-  const [gameState, setGameState] = useState(boardTemplate);
+  const [gameState, setGameState] = useState(null);
   const [roomList, setRoomList] = useState([]);
 
   // Get room name from the datatype if the button and join room..
@@ -64,6 +72,7 @@ export default function Home() {
     // On joining a game / getting data
     socketRef.current.on("roomData", (data) => {
       console.log("Recieved new board data from the server");
+      console.log(data);
       setGameState(data);
       if (data.playerNumber === 1 || data.playerNumber === 0) setPlayerNumber(data.playerNumber);
     });
@@ -76,6 +85,7 @@ export default function Home() {
 
   return (
     <GameContainer>
+      <Text>{gameState ? gameState.game.currentTurn : null}</Text>
       <RoomListContainer>
         {roomList.length > 0
           ? roomList.map((room) => {

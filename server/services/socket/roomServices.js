@@ -5,7 +5,7 @@ const Game = require("../../utils/Game");
 exports.createNewRoom = (socket, rooms) => {
   // Generate new Game Object inside the rooms object..
   const newRoomID = socket.username;
-  const newBoard = new Game();
+  const newBoard = new Game(5);
   rooms[newRoomID] = newBoard;
 
   // Set the users current room name to X, and join the new room..

@@ -30,14 +30,6 @@ export default function BottomPanel({ socketRef }) {
     socketRef.current.emit("createRoomRequest");
   };
 
-  const joinOnClick = () => {
-    socketRef.current.emit("joinRoomById", "test");
-  };
-
-  const checkRoomClick = () => {
-    socketRef.current.emit("searchForGame");
-  };
-
   return (
     <Panel>
       <Button onClick={startOnClick}>
