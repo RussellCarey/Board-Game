@@ -1,7 +1,9 @@
 const TileClass = require("./Tile");
 
 class Board {
-  constructor(boardSize) {
+  constructor(boardSize, socket, rooms) {
+    this.rooms = rooms;
+    this.socket = socket;
     this.boardSize = boardSize;
     this.pieceCount = {
       0: (boardSize = 5 ? 8 : 12),
@@ -92,9 +94,11 @@ class Board {
   };
 
   //! Check if we can run the chosen move that the player has chosen ( THIS IS THE WHOLE MOVE LOGIC ) !important.
-  canMakeSelectedMove = (socket, rooms, tileFrom, tileTo) => {
+  canMakeSelectedMove = (rooms, socket, tileFrom, tileTo) => {
     // Get current room from users..
     let canMakeMove = false;
+
+    console.log(tileTo, tileFrom);
 
     if (this.tiles[tileTo[0]][tileTo[1]].player === null) {
       // Check if it is a valid move..
@@ -109,10 +113,10 @@ class Board {
 
     // If we can move, movee
     if (canMakeMove) {
-      this.movePlayerToNewSquare(tileTo[0], tileTo[1], tileFrom[0], tileFrom[1], socket, rooms);
-      this.checkKills(tileTo[0], tileTo[1], socket, rooms);
-      this.checkBoardForDeaths(socket, rooms);
-      this.checkWinningCondition(socket, rooms);
+      this.movePlayerToNewSquare(tileTo[0], tileTo[1], tileFrom[0], tileFrom[1]);
+      this.checkKills(rooms, socket, tileTo[0], tileTo[1]);
+      this.checkBoardForDeaths(rooms, socket);
+      this.checkWinningCondition();
 
       // Change turn as we can make a move..
       rooms[socket.currentRoom].currentTurn == 0
@@ -153,7 +157,7 @@ class Board {
   };
 
   // Check sandwich kill.
-  checkSandwichKill = (cy, cx, y, x, socket, rooms) => {
+  checkSandwichKill = (rooms, socket, cy, cx, y, x) => {
     // Save check into variable, see if varaible is less than 0 -- Out of bounds
     const yCheck = cy + y;
     const xCheck = cx + x;
@@ -186,7 +190,7 @@ class Board {
   };
 
   // Check if a middle kill has happened..
-  checkMiddleKill = (cy, cx, y, x, socket, rooms) => {
+  checkMiddleKill = (rooms, socket, cy, cx, y, x) => {
     // Save check into variable,
     const yCheck = cy + y;
     const xCheck = cx + x;
@@ -212,7 +216,7 @@ class Board {
   };
 
   // Run all sandwich kill checks..
-  checkKills = (cy, cx, socket, rooms) => {
+  checkKills = (rooms, socket, cy, cx) => {
     const directionChecks = [
       [1, 0],
       [0, 1],
@@ -226,17 +230,17 @@ class Board {
 
     // Check all directions..
     directionChecks.forEach((check) => {
-      this.checkSandwichKill(cy, cx, check[0], check[1], socket, rooms);
+      this.checkSandwichKill(rooms, socket, cy, cx, check[0], check[1]);
     });
 
     // Only check the first 4 directions from the array and run check Middle kill
     directionChecks.forEach((check, ind) => {
-      if (ind <= 3) this.checkMiddleKill(cy, cx, check[0], check[1], socket, rooms);
+      if (ind <= 3) this.checkMiddleKill(rooms, socket, cy, cx, check[0], check[1]);
     });
   };
 
   // Check board for deaths after all calculations..
-  checkBoardForDeaths = (socket, rooms) => {
+  checkBoardForDeaths = (rooms, socket) => {
     const currentTurn = rooms[socket.currentRoom].currentTurn;
 
     this.tiles.map((rows) => {

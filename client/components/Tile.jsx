@@ -6,8 +6,8 @@ const TileContainer = styled.div`
   background-color: ${(props) =>
     props.player === 1 ? "blue" : props.player === 0 ? "red" : props.player === "void" ? "grey" : "grey"};
 
-  width: calc(100vw * 0.03);
-  height: calc(100vw * 0.03);
+  width: calc(100vw * 0.05);
+  height: calc(100vw * 0.05);
   border-radius: ${(props) => (props.player !== null ? "5%" : "5%")};
 
   display: flex;
@@ -42,6 +42,9 @@ export default function Tile({
   const onClickHandler = (e) => {
     const canMove = checkMovement(e, data, gameState, playerNumber, selectedPlayer, setSelectedPlayer);
     if (!canMove) return;
+
+    console.log(selectedPlayer.position);
+    console.log(data.position);
 
     // If we can move, send the request to the server..
     socketRef.current.emit("attemptMove", {

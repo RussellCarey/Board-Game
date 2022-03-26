@@ -5,6 +5,7 @@ export const checkMovement = (e, data, gameState, playerNumber, selectedPlayer, 
     if (data.player !== playerNumber && selectedPlayer === null) return;
 
     if (data.player == playerNumber) {
+      console.log("DATA PLAYER EQUALS PLAYER NUMBER");
       // Select current selected player as this space..
       setSelectedPlayer(data);
 
@@ -23,9 +24,10 @@ export const checkMovement = (e, data, gameState, playerNumber, selectedPlayer, 
       const currentx = selectedPlayer.position[1];
 
       // Check if the move we made is allowed..
-      const canMakeMove = gameState.game.board.tiles[currenty][currentx].possibleMoves.some(
-        (pos) => pos[0] === data.position[0] && pos[1] === data.position[1]
-      );
+
+      // checks whether an element is even
+      const canMakeAMove = (pos) => pos[0] === data.position[0] && pos[1] === data.position[1];
+      const canMakeMove = gameState.game.board.tiles[currenty][currentx].possibleMoves.some(canMakeAMove);
 
       document.querySelectorAll(".tile").forEach((card) => {
         card.classList.remove("playerSelected");

@@ -43,16 +43,33 @@ class Tile {
   // There is a pattern where using the x and y numbers, odd to odd and even to even, can move in a star pattern and odd even or even odd move in a cross pattern.
   generateMoveablePositions = (position) => {
     // Even is true and odd is false..
-    const y = position[0] % 2 === 0 ? true : false;
-    const x = position[1] % 2 === 0 ? true : false;
+    const yCan = position[0] % 2 === 0 ? true : false;
+    const xCan = position[1] % 2 === 0 ? true : false;
+
+    const y = position[0];
+    const x = position[1];
 
     // Base on true or false values populate the
-    if ((y && x) || (!y && !x)) {
-      return this.createStartMovement(position[0], position[1]);
+    if ((yCan && xCan) || (!yCan && !xCan)) {
+      return [
+        [y - 1, x - 1],
+        [y - 1, x],
+        [y - 1, x + 1],
+        [y + 1, x - 1],
+        [y + 1, x],
+        [y + 1, x + 1],
+        [y, x - 1],
+        [y, x + 1],
+      ];
     }
 
-    if ((y && !x) || (!y && x)) {
-      return this.createCrossMovement(position[0], position[1]);
+    if ((yCan && !xCan) || (!yCan && xCan)) {
+      return [
+        [y + 1, x],
+        [y - 1, x],
+        [y, x - 1],
+        [y, x + 1],
+      ];
     }
   };
 

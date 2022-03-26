@@ -3,8 +3,8 @@ import styled from "styled-components";
 
 const BoardContainer = styled.div`
   position: relative;
-  width: calc(100vw * 0.2);
-  height: calc(100vw * 0.2);
+  width: calc(100vw * 0.4);
+  height: calc(100vw * 0.4);
   z-index: 1;
 `;
 

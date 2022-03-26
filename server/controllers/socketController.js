@@ -52,7 +52,7 @@ exports.setupSocketCommands = (server) => {
     // Recieve move that is desired and run logic, return new data if okay..
     socket.on("attemptMove", (data) => {
       // On reciving a move attempt, move peice and do checks, send back move data
-      rooms[socket.currentRoom].board.canMakeSelectedMove(socket, rooms, data.from, data.to);
+      rooms[socket.currentRoom].board.canMakeSelectedMove(rooms, socket, data.from, data.to);
 
       // Send back game either way
       io.to(socket.currentRoom).emit("roomData", {
