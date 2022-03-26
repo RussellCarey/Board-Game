@@ -1,6 +1,6 @@
 # Board Game - Based on Vietnamese Chess
 
-Prototype for a SocketIO board / character battle game with unlockable characters using packs etc.
+Prototype for a SocketIO board / character battle game (from 2021) with unlockable characters using packs etc.
 
 Each square has an attack and defence value in this prototype for testing purposes.
 
